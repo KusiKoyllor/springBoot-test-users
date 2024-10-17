@@ -27,4 +27,17 @@ public class UserService {
     public UserEntity getUserById(Long id){
         return userRespository.findById(id).orElseThrow(() -> new RuntimeException(("User not found")));
     }
+
+    public void deleteUser(Long id){
+        userRespository.findById(id).orElseThrow(() -> new RuntimeException(("User not found")));
+        userRespository.deleteById(id);
+    }
+
+    public UserEntity updateUser(Long id, UserEntity userDetails) {
+        UserEntity currentUser =  userRespository.findById(id).orElseThrow(() -> new RuntimeException(("User not found")));
+        String newEmail = userDetails.getEmail();
+        currentUser.setEmail(newEmail);
+        return userRespository.save(currentUser);
+    }
+
 }
